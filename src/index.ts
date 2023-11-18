@@ -1,5 +1,3 @@
-import { executeTests } from "./testing/test";
-
 namespace FormValidator {
   export interface GetValueOptions {
     attributeName: string;
@@ -158,4 +156,32 @@ class Validator {
 }
 
 // ----------------------------------- //
-executeTests(FormValidator);
+
+const executeTests = function () {
+  // @ts-ignore
+  const form: HTMLFormElement = document.querySelector("form");
+  const formValidator = new FormValidator(form);
+
+  formValidator.getValue("terms"); // returns weather the checkbox is checked
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Checking the terms and conditions are checked.
+    const isAbove = formValidator.validateValue("age").isGrater(12);
+    const isTermsChecked = formValidator.validateValue("terms").isEqual(true);
+
+    if (isTermsChecked) {
+      // Do something...
+      return alert("Please check the terms and conditions to continue.");
+    }
+
+    if (!isAbove) {
+      return alert("You must be 12+ to continue");
+    }
+
+    alert("Form Submitted");
+  });
+};
+
+executeTests();

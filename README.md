@@ -10,18 +10,33 @@ const formValidator: typeof FormValidator = new FormValidator(form);
 
 // Whenever the form is submitted
 form.addEventListener("submit", (e) => {
-  // Preventing the form being submitted
-  e.preventDefault();
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  // Checking the terms and conditions are checked.
-  const isTermsChecked = formValidator.validateValue("terms").isEqual(true);
+    // Checking the terms and conditions are checked.
+    const isAbove = formValidator.validateValue("age").isGrater(12);
+    const isTermsChecked = formValidator.validateValue("terms").isEqual(true);
 
-  if (isTermsChecked) {
-    // Do something...
+    if (isTermsChecked) {
+      // Do something...
+      return alert("Please check the terms and conditions to continue.");
+    }
+
+    if (!isAbove) {
+      return alert("You must be 12+ to continue");
+    }
+
     alert("Form Submitted");
-  } else {
-    // Failed validation...
-    alert("Please check the terms and conditions to continue.");
-  }
+  });
 });
 ```
+
+## Methods
+
+- getValue
+- validateValue
+- - isEqual
+- - isLower
+- - isGrater
+- - isLowerOrEqual
+- - isGraterOrEqual
