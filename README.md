@@ -31,12 +31,3 @@ form.addEventListener("submit", (e) => {
 });
 ```
 
-## Methods
-
-- getValue
-- validateValue
-- - isEqual
-- - isLower
-- - isGrater
-- - isLowerOrEqual
-- - isGraterOrEqual
