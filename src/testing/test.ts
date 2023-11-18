@@ -2,7 +2,9 @@
 export const form: HTMLFormElement = document.querySelector("form");
 
 export const executeTests = function (FormValidator: any) {
-  const formValidator: typeof FormValidator = new FormValidator(form);
+  const formValidator = new FormValidator(form);
+
+  formValidator.getValue("terms"); // returns weather the checkbox is checked
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();

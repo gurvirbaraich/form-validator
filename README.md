@@ -9,7 +9,9 @@ A simple javascript library, that allows seamless validation of the forms on the
 const formValidator: typeof FormValidator = new FormValidator(form);
 
 // Whenever the form is submitted
-form.addEventListener("submit", (e) => {e.preventDefault();
+form.addEventListener("submit", (e) => {
+  // Preventing the form being submitted
+  e.preventDefault();
 
   // Checking the terms and conditions are checked.
   const isTermsChecked = formValidator.validateValue("terms").isEqual(true);

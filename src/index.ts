@@ -10,6 +10,10 @@ namespace Validator {
   export interface isEqualOptions {
     check: "loose" | "strict";
   }
+
+  export interface IsBetweenOptions {
+    mode: "inclusive" | "exclusive";
+  }
 }
 
 export class FormValidator {
@@ -90,13 +94,65 @@ class Validator {
     const checkType = options?.check == undefined ? "loose" : options.check;
 
     switch (checkType) {
-      case "loose": {
+      case "loose":
         return this.value == expected;
-      }
 
-      case "strict": {
+      case "strict":
         return this.value === expected;
-      }
+
+      default:
+        throw new Error(`Invalid check: ${checkType}`);
+    }
+  }
+
+  /**
+   * Checks whether the recived value is grater than expected value.
+   */
+  isGrater(seed: string | number): boolean {
+    return this.value > seed;
+  }
+
+  /**
+   * Checks whether the recived value is grater than or equal to expected value.
+   */
+  isGraterOrEqual(seed: string | number): boolean {
+    return this.value >= seed;
+  }
+
+  /**
+   * Checks whether the recived value is smaller than expected value.
+   */
+  isLower(seed: string | number): boolean {
+    return this.value < seed;
+  }
+
+  /**
+   * Checks whether the recieved value is smaller or equal to expected value.
+   */
+  isLowerOrEqual(seed: string | number): boolean {
+    return this.value <= seed;
+  }
+
+  /**
+   * Checks whether the recieved value is inbetween the range provided.
+   */
+  isBetween(
+    min: string | number,
+    max: string | number,
+    options?: Validator.IsBetweenOptions
+  ): boolean {
+    const mode: Validator.IsBetweenOptions["mode"] =
+      options?.mode == undefined ? "exclusive" : options.mode;
+
+    switch (mode) {
+      case "exclusive":
+        return this.isGrater(min) && this.isLower(max);
+
+      case "inclusive":
+        return this.isGraterOrEqual(min) && this.isLowerOrEqual(max);
+
+      default:
+        throw new Error("Invalid mode: " + mode);
     }
   }
 }
